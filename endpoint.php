@@ -51,6 +51,7 @@
 		$param['city'] = isset($request["city"]) ? $request["city"] : false;
 		$param['state'] = isset($request["state"]) ? $request["state"] : false;
 		$param['postcode'] = isset($request["postcode"]) ? $request["postcode"] : false;
+		$param['status_order'] = isset($request["status_order"]) ? $request["status_order"] : false;
 
 		if ($param['id_order'] == false) {
 			$response["message"] = "id_order harus ada";

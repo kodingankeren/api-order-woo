@@ -181,11 +181,10 @@
 				$update_adress = true;
 				$address['postcode'] = $param['postcode'];
 			}
+			if($param['status_order'] != false){
+				$order->update_status( $param['status_order'] );
+			}
 
-			// $order->update_status( 'completed' );
-			$order_data = $order->get_data(); // The Order data
-
-			// $item_produk = new WC_Order_Item_Product();
 			if ($update_adress) {
 				$order->set_address( $address, 'billing' );
 				$order->set_address( $address, 'shipping' );

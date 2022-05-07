@@ -46,7 +46,7 @@ belajar-api-woo
 
 - id_user
 
-- status_order (pending|)
+- status_order (pending','failed','on-hold','completed')
 
 - first_name
 - last_name

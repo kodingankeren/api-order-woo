@@ -7,7 +7,8 @@ belajar-api-woo
 # Parameter Conditional
 - pages
 - per_page
-
+- start 				// Format yyyy-mm-dd
+- end 					// Format yyyy-mm-dd
 ----
 POST
 ----

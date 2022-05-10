@@ -14,7 +14,9 @@
 	if ($method == "GET") {
 		$pages = isset($_GET["pages"]) ? $_GET["pages"] : 1;
 		$per_page = isset($_GET["per_page"]) ? $_GET["per_page"] : 1;
-		$response = belajar_api_woo_get($pages,$per_page);
+		$start = isset($_GET["start"]) ? $_GET["start"] : false;
+		$end = isset($_GET["end"]) ? $_GET["end"] : false;
+		$response = belajar_api_woo_get($pages,$per_page,$start,$end);
 	}elseif ($method == "POST") {
 		$param = array();
 		$param['qty'] = isset($_POST["qty"]) ? $_POST["qty"] : 1;

@@ -1,24 +1,49 @@
 <?php
 
-	function belajar_api_woo_get($page,$per_page){
+	function belajar_api_woo_get($page,$per_page,$start_date,$end_date){
 		$per_page = $per_page;
 		$total_post = wp_count_posts('shop_order' );
 
-		$order_count      = array();
-		$order_count_data = wp_count_posts( 'shop_order' );
-		$jumlah_post = 0;
-		foreach ( wc_get_order_statuses() as $status_slug => $status_name ) {
-		$jumlah_post += (int)$order_count_data->{ $status_slug };
-			$order_count[ $status_slug ] = $order_count_data->{ $status_slug };
+		$query_date = array(
+					'inclusive' => true,
+				);
+		if ($start_date != false) {
+			$obj = array(
+				'after'     => $start_date
+			);
+			array_push($query_date, $obj);
 		}
+		if ($end_date != false) {
+			$obj = array(
+				'before'     => $end_date,
+			);
+			array_push($query_date, $obj);
+		}
+		$obj_name = new WP_Query( array(
+			'date_query' => array(
+				$query_date
+			),
 
+			'post_type'         => 'shop_order',
+			'post_status'       =>  array_keys( wc_get_order_statuses() ),
+		));
 		
+		$jumlah_post = $obj_name->post_count;
+
 		$jumlah_page = ceil($jumlah_post / $per_page);
 		
-		$data = array();
+		$data = array(); 
+
 		$loop = new WP_Query( array(
+			'date_query' => array(
+				array(
+					'after'     => $start_date,
+					'before'     => $end_date,
+					'inclusive' => true,
+				),
+			),
+
 			'post_type'         => 'shop_order',
-			        // "post_status" => array('wc-processing'),
 			'post_status'       =>  array_keys( wc_get_order_statuses() ),
 	        'paged' => $page,
 	   		'posts_per_page' => $per_page
@@ -33,7 +58,7 @@
 				$obj = array();
 				$obj['id'] = $order_id;
 				$obj['user_id'] = $order->get_user_id();
-				$order_data = $order->get_data(); // The Order data
+				$order_data = $order->get_data();
 
 				$obj['order_status'] = $order_data['status'];
 
@@ -213,8 +238,6 @@
 		}
 
 		$respon = [];
-		$respon["tes"] = $order_item_id;
-		// $respon["get_items"] = $order->get_items();
 		$respon["status"] = "success";
 		$respon["message"] = "berhasil";
 		$respon["data"] = array("id" => $id);

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: belajar api woo
+Plugin Name: api-order-woo
 Plugin URI: https://twitter.com/belajar-api-woo
 Description: 
 Version: 1.0

@@ -79,10 +79,16 @@
 				$obj['email'] = $order_data['billing']['email'];
 				$obj['phone'] = $order_data['billing']['phone'];
 
+				$obj['product'] = [];
 				foreach ($order->get_items() as $item_key => $item_values):
 					$item_data = $item_values->get_data();
-					$obj['qty'] = $item_data['quantity'];
-					$obj['id_produk'] = $item_data['product_id'];
+					$_product =  wc_get_product($item_data['product_id']);
+					$this_item = [];
+					$this_item['sku'] = $_product->get_sku();
+					$this_item['name'] = $item_data['name'];
+					$this_item['qty'] = $item_data['quantity'];
+					$this_item['id_produk'] = $item_data['product_id'];
+					array_push($obj['product'], $this_item);
 				endforeach;
 				array_push($data, $obj);
 
